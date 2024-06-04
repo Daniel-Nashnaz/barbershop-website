@@ -95,81 +95,109 @@
             <div class="d-none d-sm-block mb-5 pb-4">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="contact-title">add appoinment</h2>
+                        <h2 class="contact-title">Make an Appointment</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="booking_process.php" method="post" id="bookingForm" novalidate="novalidate">
+                        <form class="form-contact contact_form" action="booking_process.php" method="post"
+                            id="bookingForm" novalidate="novalidate">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="table_number">select hiarcut:</label>
+                                        <label for="table_number">select barbershop:</label>
                                         <br>
-                                        <select class="form-control" name="table_number" id="table_number">
-                                            <option value="">בחר מספרה</option>
-                                            <option value="1">מספרה 1</option>
-                                            <option value="2">מספרה 2</option>
-                                            <!-- ניתן להוסיף את רשימת המספרות הנוספות כפי שנדרש -->
+                                        <select class="form-control" name="barbershop_number" id="barbershop_number">
+                                            <option value="barbershop1">דוידוב רחבת מבצע קדם 19 באר שבע</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="book_name">select barber:</label>
+                                        <label for="barber_name">select barber:</label>
                                         <br>
-                                        <select class="form-control" name="book_name" id="book_name">
-                                            <option value="">בחר ספר</option>
-                                            <option value="Book 1">ספר 1</option>
-                                            <option value="Book 2">ספר 2</option>
-                                            <!-- ניתן להוסיף את רשימת הספרים הנוספים כפי שנדרש -->
+                                        <select class="form-control" name="barber_name" id="barber_name">
+                                            <option value="barber1">יעקב</option>
+                                            <option value="barber2">אלי</option>
+                                            <option value="barber3">ברוך</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="booking_datetime">Date:</label>
+                                        <br>
+                                        <input class="form-control" type="date" id="appointmentDate"
+                                            name="appointmentDate">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="appointmentTime">select hour:</label>
+                                        <br>
+                                        <select class="form-control" id="appointmentTime" name="appointmentTime">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="booking_datetime">Date and hour:</label>
-                                        <input class="form-control" type="datetime-local" name="booking_datetime" id="booking_datetime" placeholder="תאריך ושעת התור">
+                                        <label>Select Haircut Type:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="1"> תספורת</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="2"> זקן</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="3">פסים/הבהברה</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="4"> צבע</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="5"> גבות</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="6"> שעווה</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="customer_name">your name:</label>
+                                        <input class="form-control" type="text" name="customer_name" id="customer_name"
+                                            placeholder="שם הלקוח">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="haircut_type">select type of haircut</label>
-                                        <br>
-                                        <select class="form-control" name="haircut_type" id="haircut_type">
-                                            <option value="">select type of haircut</option>
-                                            <option value="Type 1">תספורת סוג 1</option>
-                                            <option value="Type 2">תספורת סוג 2</option>
-                                            <!-- ניתן להוסיף את רשימת סוגי התספורות הנוספים כפי שנדרש -->
-                                        </select>
+                                        <label for="customer_email">your email:</label>
+                                        <input class="form-control" type="email" name="customer_email"
+                                            id="customer_email" placeholder="מייל שלך">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="booking_time">select hour:</label>
-                                        <br>
-                                        <select class="form-control" name="booking_time" id="booking_time">
-                                            <option value="">select hour:</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <!-- ניתן להוסיף את רשימת השעות הנוספות כפי שנדרש -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="client_name">your name:</label>
-                                        <input class="form-control" type="text" name="client_name" id="client_name" placeholder="שם הלקוח">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="client_email">your email:</label>
-                                        <input class="form-control" type="email" name="client_email" id="client_email" placeholder="מייל שלך">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="client_phone">your phone:</label>
-                                        <input class="form-control" type="tel" name="client_phone" id="client_phone" placeholder="טלפון">
+                                        <label for="customer_phone">your phone:</label>
+                                        <input class="form-control" type="tel" name="customer_phone" id="customer_phone"
+                                            placeholder="טלפון">
                                     </div>
                                 </div>
                             </div>
@@ -177,31 +205,8 @@
                                 <button type="submit" class="btn btn-primary">send</button>
                             </div>
                         </form>
-                        
 
-                    </div>
-                    <div class="col-lg-3 offset-lg-1">
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-home"></i></span>
-                            <div class="media-body">
-                                <h3>Buttonwood, California.</h3>
-                                <p>Rosemead, CA 91770</p>
-                            </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
-                            <div class="media-body">
-                                <h3>+1 253 565 2365</h3>
-                                <p>Mon to Fri 9am to 6pm</p>
-                            </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-email"></i></span>
-                            <div class="media-body">
-                                <h3>support@colorlib.com</h3>
-                                <p>Send us your query anytime!</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -217,7 +222,7 @@
 </div>
 
 <!-- JS here -->
-
+<script src="js/book-appointment.js"></script>
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <!-- Jquery, Popper, Bootstrap -->
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
