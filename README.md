@@ -1,1 +1,1 @@
-# brber-master
+# barbershop website for Davidov and Barboris
