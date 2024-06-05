@@ -145,40 +145,45 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="1"> תספורת</label>
+                                                    <label><input type="checkbox" name="haircut_type[]" value="1">
+                                                        תספורת</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="2"> זקן</label>
+                                                    <label><input type="checkbox" name="haircut_type[]" value="2">
+                                                        זקן</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="3">פסים/הבהברה</label>
+                                                    <label><input type="checkbox" name="haircut_type[]"
+                                                            value="3">פסים/הבהברה</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="4"> צבע</label>
+                                                    <label><input type="checkbox" name="haircut_type[]" value="4">
+                                                        צבע</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="5"> גבות</label>
+                                                    <label><input type="checkbox" name="haircut_type[]" value="5">
+                                                        גבות</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="checkbox">
-                                                    <label><input type="checkbox" name="haircut_type[]" value="6"> שעווה</label>
+                                                    <label><input type="checkbox" name="haircut_type[]" value="6">
+                                                        שעווה</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="customer_name">your name:</label>
@@ -203,10 +208,19 @@
                             </div>
                             <div class="form-group mt-3">
                                 <button type="submit" class="btn btn-primary">send</button>
+                                <span class="info-text">תוכן הטקסט שברצונך להוסיף</span>
                             </div>
                         </form>
-
-
+                        <div id="successModal" class="modal">
+                            <div class="modal-content">
+                              <span class="close">&times;</span>
+                              <p class="text-right">הפגישה נשלחה בהצלחה!</p>
+                              <div class="modal-buttons">
+                                <button id="confirmButton" onclick="closeModal()">אישור</button>
+                                <button id="resetButton" onclick="openModal()">איפוס טופס</button>
+                              </div>
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -224,34 +238,7 @@
 <!-- JS here -->
 <script src="js/book-appointment.js"></script>
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-<!-- Jquery, Popper, Bootstrap -->
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="./assets/js/popper.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<!-- Jquery Mobile Menu -->
-<script src="./assets/js/jquery.slicknav.min.js"></script>
-
-<!-- Jquery Slick , Owl-Carousel Plugins -->
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/slick.min.js"></script>
-<!-- One Page, Animated-HeadLin -->
-<script src="./assets/js/wow.min.js"></script>
-<script src="./assets/js/animated.headline.js"></script>
-
-<!-- Nice-select, sticky -->
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.sticky.js"></script>
-<script src="./assets/js/jquery.magnific-popup.js"></script>
-
-<!-- contact js -->
-<script src="./assets/js/contact.js"></script>
-<script src="./assets/js/jquery.form.js"></script>
-<script src="./assets/js/jquery.validate.min.js"></script>
-<script src="./assets/js/mail-script.js"></script>
-<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-
-<!-- Jquery Plugins, main Jquery -->
-<script src="./assets/js/plugins.js"></script>
 <script src="./assets/js/main.js"></script>
 
 </body>

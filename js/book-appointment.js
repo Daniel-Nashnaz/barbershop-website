@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+    populateHours();
     const bookingForm = document.getElementById("bookingForm");
+    const errorMessageContainer = document.getElementById("errorPopup");
+    const successMessageContainer = document.getElementById("successPopup");
 
-    // Call the populateHours function to generate and populate the select list
     bookingForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -15,71 +17,145 @@ document.addEventListener("DOMContentLoaded", function () {
         const customerEmail = document.getElementById("customer_email").value;
         const customerPhone = document.getElementById("customer_phone").value;
 
-
-        let isValid = true;
         const errorMessages = [];
 
         if (selectedBarbershop === "") {
-            isValid = false;
             errorMessages.push("Please select a barbershop.");
         }
 
         if (selectedBarber === "") {
-            isValid = false;
             errorMessages.push("Please select a barber.");
         }
 
         if (selectedHaircutTypes.length === 0) {
-            isValid = false;
             errorMessages.push("Please select at least one haircut type.");
         }
 
         if (selectedDate < currentDate || selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
-            isValid = false;
             errorMessages.push("Please select a valid date (not including Friday or Saturday, and not in the past).");
         }
 
         if (selectedTime === "") {
-            isValid = false;
             errorMessages.push("Please select a time.");
         }
 
         if (!/^[a-zA-Z\s]{2,}$/.test(customerName)) {
-            isValid = false;
             errorMessages.push("Please enter a valid name with at least two letters and no numbers.");
         }
 
         if (!/^\d+$/.test(customerPhone)) {
-            isValid = false;
             errorMessages.push("Please enter a valid phone number containing only digits.");
         }
 
         if (!isValidEmail(customerEmail)) {
-            isValid = false;
             errorMessages.push("Please enter a valid email address.");
         }
 
-        if (!isValid) {
-            alert(errorMessages.join("\n"));
+        if (errorMessages.length > 0) {
+            showErrorMessages(errorMessages);
         } else {
-            // If the form is valid, you can proceed with form submission
-            alert("Form submitted successfully!");
-            bookingForm.submit();
+            // If the form is valid, display success modal
+            openModal()
+            showSuccessModal();
         }
+
+    // Event listener for the confirm button
+    document.getElementById("confirmButton").addEventListener("click", function () {
+        closeModal();
+        // Additional actions upon confirmation, if needed
     });
+
+    // Event listener for the reset button
+    document.getElementById("resetButton").addEventListener("click", function () {
+        bookingForm.reset();
+        closeModal();
+    });
+
+    // Function to close the modal
+});
+
 
     // Function to validate email address
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-    // Generating list of hours
 
+    // Function to populate appointment hours
+    function populateHours() {
+        var select = document.getElementById("appointmentTime");
+        for (var i = 0; i < hours.length; i++) {
+            var option = document.createElement("option");
+            option.text = hours[i];
+            option.value = hours[i];
+            select.appendChild(option);
+        }
+    }
 
-    // Other form validation code goes here...
+    // Function to display error messages in a pop-up
+    function showErrorMessages(messages) {
+        const errorMessage = messages.join("\n");
+        alert(errorMessage);
+    }
+/*
+    // Function to display success modal
+    function showSuccessModal() {
+        const modal = document.getElementById("successModal");
+        modal.style.display = "block";
+    }
 
+    // Close the modal when the user clicks on the close button
+    const closeBtn = document.querySelector(".close");
+    closeBtn.addEventListener("click", function () {
+        const modal = document.getElementById("successModal");
+        modal.style.display = "block";
+    });
 
+    // Close the modal when the user clicks outside of it
+    window.addEventListener("click", function (event) {
+        const modal = document.getElementById("successModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+    */
 });
+
+
+
+let scrollPosition = 0;
+
+function openModal() {
+    const modal = document.getElementById("successModal");
+    modal.style.display = "block";
+    disableScroll(); // מנע גלילה
+}
+
+function closeModal() {
+    const modal = document.getElementById("successModal");
+    modal.style.display = "none";
+    enableScroll(); // שחרור המניעה
+}
+
+function disableScroll() {
+    scrollPosition = document.documentElement.scrollTop;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+}
+
+function enableScroll() {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo(0, scrollPosition);
+}
+
+var hours = [
+    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+    "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+    "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"
+];
+
 
 /* document.addEventListener('DOMContentLoaded', function () {
 
