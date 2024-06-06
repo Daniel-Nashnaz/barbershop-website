@@ -95,113 +95,132 @@
             <div class="d-none d-sm-block mb-5 pb-4">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="contact-title">add appoinment</h2>
+                        <h2 class="contact-title">Make an Appointment</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="booking_process.php" method="post" id="bookingForm" novalidate="novalidate">
+                        <form class="form-contact contact_form" action="booking_process.php" method="post"
+                            id="bookingForm" novalidate="novalidate">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="table_number">select hiarcut:</label>
+                                        <label for="table_number">select barbershop:</label>
                                         <br>
-                                        <select class="form-control" name="table_number" id="table_number">
-                                            <option value="">בחר מספרה</option>
-                                            <option value="1">מספרה 1</option>
-                                            <option value="2">מספרה 2</option>
-                                            <!-- ניתן להוסיף את רשימת המספרות הנוספות כפי שנדרש -->
+                                        <select class="form-control" name="barbershop_number" id="barbershop_number">
+                                            <option value="barbershop1">דוידוב רחבת מבצע קדם 19 באר שבע</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="book_name">select barber:</label>
+                                        <label for="barber_name">select barber:</label>
                                         <br>
-                                        <select class="form-control" name="book_name" id="book_name">
-                                            <option value="">בחר ספר</option>
-                                            <option value="Book 1">ספר 1</option>
-                                            <option value="Book 2">ספר 2</option>
-                                            <!-- ניתן להוסיף את רשימת הספרים הנוספים כפי שנדרש -->
+                                        <select class="form-control" name="barber_name" id="barber_name">
+                                            <option value="barber1">יעקב</option>
+                                            <option value="barber2">אלי</option>
+                                            <option value="barber3">ברוך</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="booking_datetime">Date:</label>
+                                        <br>
+                                        <input class="form-control" type="date" id="appointmentDate"
+                                            name="appointmentDate">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="appointmentTime">select hour:</label>
+                                        <br>
+                                        <select class="form-control" id="appointmentTime" name="appointmentTime">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="booking_datetime">Date and hour:</label>
-                                        <input class="form-control" type="datetime-local" name="booking_datetime" id="booking_datetime" placeholder="תאריך ושעת התור">
+                                        <label>Select Haircut Type:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="1">
+                                                        תספורת</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="2">
+                                                        זקן</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]"
+                                                            value="3">פסים/הבהברה</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="4">
+                                                        צבע</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="5">
+                                                        גבות</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="haircut_type[]" value="6">
+                                                        שעווה</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="haircut_type">select type of haircut</label>
-                                        <br>
-                                        <select class="form-control" name="haircut_type" id="haircut_type">
-                                            <option value="">select type of haircut</option>
-                                            <option value="Type 1">תספורת סוג 1</option>
-                                            <option value="Type 2">תספורת סוג 2</option>
-                                            <!-- ניתן להוסיף את רשימת סוגי התספורות הנוספים כפי שנדרש -->
-                                        </select>
+                                        <label for="customer_name">your name:</label>
+                                        <input class="form-control" type="text" name="customer_name" id="customer_name"
+                                            placeholder="שם הלקוח">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="booking_time">select hour:</label>
-                                        <br>
-                                        <select class="form-control" name="booking_time" id="booking_time">
-                                            <option value="">select hour:</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <!-- ניתן להוסיף את רשימת השעות הנוספות כפי שנדרש -->
-                                        </select>
+                                        <label for="customer_email">your email:</label>
+                                        <input class="form-control" type="email" name="customer_email"
+                                            id="customer_email" placeholder="מייל שלך">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="client_name">your name:</label>
-                                        <input class="form-control" type="text" name="client_name" id="client_name" placeholder="שם הלקוח">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="client_email">your email:</label>
-                                        <input class="form-control" type="email" name="client_email" id="client_email" placeholder="מייל שלך">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="client_phone">your phone:</label>
-                                        <input class="form-control" type="tel" name="client_phone" id="client_phone" placeholder="טלפון">
+                                        <label for="customer_phone">your phone:</label>
+                                        <input class="form-control" type="tel" name="customer_phone" id="customer_phone"
+                                            placeholder="טלפון">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <button type="submit" class="btn btn-primary">send</button>
+                                <span class="info-text">תוכן הטקסט שברצונך להוסיף</span>
                             </div>
                         </form>
-                        
-
-                    </div>
-                    <div class="col-lg-3 offset-lg-1">
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-home"></i></span>
-                            <div class="media-body">
-                                <h3>Buttonwood, California.</h3>
-                                <p>Rosemead, CA 91770</p>
+                        <div id="successModal" class="modal">
+                            <div class="modal-content">
+                              <span class="close">&times;</span>
+                              <p class="text-right">הפגישה נשלחה בהצלחה!</p>
+                              <div class="modal-buttons">
+                                <button id="confirmButton" onclick="closeModal()">אישור</button>
+                                <button id="resetButton" onclick="openModal()">איפוס טופס</button>
+                              </div>
                             </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
-                            <div class="media-body">
-                                <h3>+1 253 565 2365</h3>
-                                <p>Mon to Fri 9am to 6pm</p>
-                            </div>
-                        </div>
-                        <div class="media contact-info">
-                            <span class="contact-info__icon"><i class="ti-email"></i></span>
-                            <div class="media-body">
-                                <h3>support@colorlib.com</h3>
-                                <p>Send us your query anytime!</p>
-                            </div>
-                        </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -210,151 +229,16 @@
     <!-- Contact Area End -->
 </main>
 
-<footer>
-    <!--? Footer Start-->
-    <div class="footer-area section-bg" data-background="assets/img/gallery/footer_bg.png">
-        <div class="container">
-            <div class="footer-top footer-padding">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-8">
-                        <div class="single-footer-caption mb-50">
-                            <!-- logo -->
-                            <div class="footer-logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                            <div class="footer-tittle">
-                                <div class="footer-pera">
-                                    <p class="info1">Receive updates and latest news direct from Simply enter.</p>
-                                </div>
-                            </div>
-                            <div class="footer-number">
-                                <h4><span>+564 </span>7885 3222</h4>
-                                <p>youremail@gmail.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Location </h4>
-                                <ul>
-                                    <li><a href="#">Advanced</a></li>
-                                    <li><a href="#"> Management</a></li>
-                                    <li><a href="#">Corporate</a></li>
-                                    <li><a href="#">Customer</a></li>
-                                    <li><a href="#">Information</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Explore</h4>
-                                <ul>
-                                    <li><a href="#">Cookies</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Proparties</a></li>
-                                    <li><a href="#">Licenses</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Location</h4>
-                                <div class="footer-pera">
-                                    <p class="info1">Subscribe now to get daily updates</p>
-                                </div>
-                            </div>
-                            <!-- Form -->
-                            <div class="footer-form">
-                                <div id="mc_embed_signup">
-                                    <form target="_blank"
-                                        action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                        method="get" class="subscribe_form relative mail_part" novalidate="true">
-                                        <input type="email" name="EMAIL" id="newsletter-form-email"
-                                            placeholder=" Email Address " class="placeholder hide-on-focus"
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Your email address'">
-                                        <div class="form-icon">
-                                            <button type="submit" name="submit" id="newsletter-submit"
-                                                class="email_icon newsletter-submit button-contactForm">Send</button>
-                                        </div>
-                                        <div class="mt-10 info"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="row d-flex justify-content-between align-items-center">
-                    <div class="col-xl-9 col-lg-8">
-                        <div class="footer-copy-right">
-                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
-                                template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                    href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4">
-                        <!-- Footer Social -->
-                        <div class="footer-social f-right">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fas fa-globe"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End-->
-</footer>
+
 <!-- Scroll Up -->
 <div id="back-top">
     <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 </div>
 
 <!-- JS here -->
-
+<script src="js/book-appointment.js"></script>
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-<!-- Jquery, Popper, Bootstrap -->
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="./assets/js/popper.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<!-- Jquery Mobile Menu -->
-<script src="./assets/js/jquery.slicknav.min.js"></script>
-
-<!-- Jquery Slick , Owl-Carousel Plugins -->
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/slick.min.js"></script>
-<!-- One Page, Animated-HeadLin -->
-<script src="./assets/js/wow.min.js"></script>
-<script src="./assets/js/animated.headline.js"></script>
-
-<!-- Nice-select, sticky -->
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.sticky.js"></script>
-<script src="./assets/js/jquery.magnific-popup.js"></script>
-
-<!-- contact js -->
-<script src="./assets/js/contact.js"></script>
-<script src="./assets/js/jquery.form.js"></script>
-<script src="./assets/js/jquery.validate.min.js"></script>
-<script src="./assets/js/mail-script.js"></script>
-<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-
-<!-- Jquery Plugins, main Jquery -->
-<script src="./assets/js/plugins.js"></script>
 <script src="./assets/js/main.js"></script>
 
 </body>
