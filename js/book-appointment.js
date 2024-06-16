@@ -1,295 +1,338 @@
-document.addEventListener("DOMContentLoaded", function () {
-    populateHours();
-    const bookingForm = document.getElementById("bookingForm");
-    const errorMessageContainer = document.getElementById("errorPopup");
-    const successMessageContainer = document.getElementById("successPopup");
+import { IP, PORT } from './constants.js';
+import { AppointmentData } from './models.js';
+import { validateName, validateEmail, validatePhone, validateSelectedDate, isNullOrUndefined, isNullOrUndefinedOrNan } from './validation.js';
+let validations = false;
+let scrollPosition = 0;
 
-    bookingForm.addEventListener("submit", function (event) {
+const appointmentData = new AppointmentData();
+document.addEventListener("DOMContentLoaded", () => {
+    const dateInput = document.getElementById("appointmentDate");
+    const selectedTime = document.getElementById("appointmentTime");
+    const selectedBarbershops = document.getElementById("barbershops");
+    const selectedBarbers = document.getElementById("barbers");
+    const selectedHaircutTypes = document.querySelectorAll('input[name="haircut_type[]"]');
+    const nameInput = document.getElementById("customer_name");
+    const emailInput = document.getElementById("customer_email");
+    const phoneInput = document.getElementById('customer_phone');
+    const closeButtons = document.querySelectorAll('[data-dismiss="modal"]');
+    const form = document.getElementById("appointmentForm");
+    populateBarbershops(selectedBarbershops);
+
+    dateInput.addEventListener('change', () => {
+        showAvailableTimes(dateInput, selectedTime, showError);
+    });
+
+    selectedBarbershops.addEventListener('change', () => {
+        handleSelectionBarbershopsChange(selectedBarbershops.value);
+        selectedBarbers.innerHTML = "";
+        if (selectedBarbershops.value !== "") {
+            populateBarbers(selectedBarbers);
+        }
+    });
+
+    selectedBarbers.addEventListener('change', () => {
+        handleSelectionBarbersChange(selectedBarbers.value);
+    });
+
+    handleSelectedCheckboxesChange(selectedHaircutTypes);
+
+    selectedTime.addEventListener('change', () => {
+        appointmentData.timeStart = new Date(dateInput.value + 'T' + selectedTime.value);
+        appointmentData.timeEnd = new Date(dateInput.value + 'T' + addHalfHourToTime(selectedTime.value));
+    });
+
+    nameInput.addEventListener('input', (event) => {
+        const validateNameResult = validateName(event.target.value);
+        if (validateNameResult === "") {
+            appointmentData.name = event.target.value;
+            showError();
+        } else {
+            appointmentData.name = null;
+            showError(validateNameResult);
+        }
+    });
+
+    emailInput.addEventListener('input', (event) => {
+        const validateEmailResult = validateEmail(event.target.value);
+        if (validateEmailResult === "") {
+            appointmentData.email = event.target.value;
+            showError();
+        } else {
+            appointmentData.email = null;
+            showError(validateEmailResult);
+        }
+    });
+
+    phoneInput.addEventListener('input', (event) => {
+        const validatePhoneResult = validatePhone(event.target.value);
+        if (validatePhoneResult === "") {
+            appointmentData.phone = event.target.value;
+            showError();
+        } else {
+            appointmentData.phone = null;
+            showError(validatePhoneResult);
+        }
+    });
+
+    form.addEventListener("reset", (event) => {
         event.preventDefault();
+        selectedBarbershops.innerHTML = '';
+        selectedBarbers.innerHTML = '';
+        selectedTime.innerHTML = '';
+        dateInput.value = '';
+        form.reset();
+    });
 
-        const selectedBarbershop = document.getElementById("barbershop_number").value;
-        const selectedBarber = document.getElementById("barber_name").value;
-        const selectedHaircutTypes = document.querySelectorAll('input[name="haircut_type[]"]:checked');
-        const selectedDate = new Date(document.getElementById("appointmentDate").value);
-        const currentDate = new Date();
-        const selectedTime = document.getElementById("appointmentTime").value;
-        const customerName = document.getElementById("customer_name").value;
-        const customerEmail = document.getElementById("customer_email").value;
-        const customerPhone = document.getElementById("customer_phone").value;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log(appointmentData);
+        validateForm();
+        if (validations) {
+            fetch(`http://${IP}:${PORT}/addAppointment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(appointmentData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('New customer and appointment:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
 
+            //== If the form is valid, display success modal
+            openModal()
+
+        }
+
+    });
+
+    const validateForm = () => {
+        showError();
         const errorMessages = [];
-
-        if (selectedBarbershop === "") {
+        if (isNullOrUndefined(appointmentData.barbershopId) || selectedBarbershops.value === "") {
             errorMessages.push("Please select a barbershop.");
         }
 
-        if (selectedBarber === "") {
+        if (isNullOrUndefined(appointmentData.barberId) || selectedBarbers.value === "") {
             errorMessages.push("Please select a barber.");
         }
 
-        if (selectedHaircutTypes.length === 0) {
+        if (isNullOrUndefined(appointmentData.haircutType) || appointmentData.haircutType.length === 0) {
             errorMessages.push("Please select at least one haircut type.");
         }
 
-        if (selectedDate < currentDate || selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
-            errorMessages.push("Please select a valid date (not including Friday or Saturday, and not in the past).");
+        if (dateInput.value === "") {
+            errorMessages.push("Please select a date.");
         }
 
-        if (selectedTime === "") {
+        if (isNullOrUndefined(appointmentData.timeStart) || selectedTime.value === "") {
             errorMessages.push("Please select a time.");
         }
 
-        if (!/^[a-zA-Z\s]{2,}$/.test(customerName)) {
-            errorMessages.push("Please enter a valid name with at least two letters and no numbers.");
+        if (isNullOrUndefined(appointmentData.name)) {
+            errorMessages.push("Please enter your name");
+        }
+        if (isNullOrUndefined(appointmentData.email)) {
+            errorMessages.push("Please enter your email");
+        }
+        if (isNullOrUndefined(appointmentData.phone)) {
+            errorMessages.push("Please enter your phone");
         }
 
-        if (!/^\d+$/.test(customerPhone)) {
-            errorMessages.push("Please enter a valid phone number containing only digits.");
-        }
+        showError(errorMessages.join('\n'));
+    }
 
-        if (!isValidEmail(customerEmail)) {
-            errorMessages.push("Please enter a valid email address.");
-        }
+    const openModal = () => {
+        const successModal = document.getElementById('statusSuccessModal');
+        successModal.classList.add('show');
+        disableScroll();
+    }
 
-        if (errorMessages.length > 0) {
-            showErrorMessages(errorMessages);
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            modal.classList.remove('show');
+            form.reset();
+            enableScroll();
+        });
+    });
+
+    const disableScroll = () => {
+        scrollPosition = document.documentElement.scrollTop;
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+    }
+
+    const enableScroll = () => {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        window.scrollTo(0, scrollPosition);
+    }
+});
+
+
+
+const showAvailableTimes = async(selectedDate, timeSelect, errorHandler) => {
+    let availableTimes;
+    if (isNullOrUndefinedOrNan(appointmentData.barbershopId)) {
+        errorHandler("Please select a barbershop.");
+        timeSelect.innerHTML = '';
+        selectedDate.value = '';
+        return;
+    }
+
+    if (isNullOrUndefinedOrNan(appointmentData.barberId)) {
+        errorHandler("Please select a barber.");
+        timeSelect.innerHTML = '';
+        selectedDate.value = '';
+        return;
+    }
+
+    const validateMessage = validateSelectedDate(selectedDate.value);
+    if (!isNullOrUndefinedOrNan(validateMessage)) {
+        timeSelect.innerHTML = '';
+        selectedDate.value = '';
+        errorHandler(validateMessage);
+        return;
+    }
+    try {
+        const response = await fetch(`http://${IP}:${PORT}/availableSlots?date=${selectedDate.value}&barberId=${appointmentData.barberId}&barbershopId=${appointmentData.barbershopId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        availableTimes = await response.json();
+    } catch (error) {
+        timeSelect.innerHTML = '';
+        selectedDate.value = '';
+        console.error('There was a problem with your fetch operation:', error);
+        errorHandler('There was a problem with your fetch operation.');
+    }
+    console.log(availableTimes);
+    if (availableTimes && availableTimes.length !== 0 && Array.isArray(availableTimes)) {
+        timeSelect.innerHTML = '';
+        const option = document.createElement("option");
+        option.value = "";
+        timeSelect.add(option);
+        availableTimes.forEach(time => {
+            const option = document.createElement('option');
+            option.text = time;
+            timeSelect.add(option);
+        });
+        errorHandler();
+    } else {
+        timeSelect.innerHTML = '';
+        console.error('Data is empty or not an array:', availableTimes);
+        errorHandler('Data is empty, there are no queues');
+    }
+}
+
+const populateBarbershops = async(selectedBarbershop) => {
+    let barbershopsData;
+    try {
+        const response = await fetch(`http://${IP}:${PORT}/barbershop/barbershops`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        barbershopsData = await response.json();
+
+        if (barbershopsData && barbershopsData.length !== 0 && Array.isArray(barbershopsData)) {
+            barbershopsData.forEach((data) => {
+                const option = document.createElement("option");
+                option.text = data.name + " " + data.address + " " + data.city;
+                option.value = data.id;
+                selectedBarbershop.appendChild(option);
+            });
         } else {
-            // If the form is valid, display success modal
-            openModal()
-            showSuccessModal();
+            console.error('Data is empty or not an array:', barbershopsData);
+            showError('Data is empty or not an array.');
         }
-
-    // Event listener for the confirm button
-    document.getElementById("confirmButton").addEventListener("click", function () {
-        closeModal();
-        // Additional actions upon confirmation, if needed
-    });
-
-    // Event listener for the reset button
-    document.getElementById("resetButton").addEventListener("click", function () {
-        bookingForm.reset();
-        closeModal();
-    });
-
-    // Function to close the modal
-});
-
-
-    // Function to validate email address
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    } catch (error) {
+        console.error('There was a problem with your fetch operation:', error);
+        showError('There was a problem with your fetch operation.');
     }
-
-    // Function to populate appointment hours
-    function populateHours() {
-        var select = document.getElementById("appointmentTime");
-        for (var i = 0; i < hours.length; i++) {
-            var option = document.createElement("option");
-            option.text = hours[i];
-            option.value = hours[i];
-            select.appendChild(option);
+}
+const populateBarbers = async(selectedBarbershop) => {
+    let barbersData;
+    try {
+        const response = await fetch(`http://${IP}:${PORT}/barber/getBarbersOfBarbershopId/${appointmentData.barbershopId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    }
-
-    // Function to display error messages in a pop-up
-    function showErrorMessages(messages) {
-        const errorMessage = messages.join("\n");
-        alert(errorMessage);
-    }
-/*
-    // Function to display success modal
-    function showSuccessModal() {
-        const modal = document.getElementById("successModal");
-        modal.style.display = "block";
-    }
-
-    // Close the modal when the user clicks on the close button
-    const closeBtn = document.querySelector(".close");
-    closeBtn.addEventListener("click", function () {
-        const modal = document.getElementById("successModal");
-        modal.style.display = "block";
-    });
-
-    // Close the modal when the user clicks outside of it
-    window.addEventListener("click", function (event) {
-        const modal = document.getElementById("successModal");
-        if (event.target === modal) {
-            modal.style.display = "none";
+        barbersData = await response.json();
+        console.log(barbersData);
+        if (barbersData && barbersData.length !== 0 && Array.isArray(barbersData)) {
+            //TODO: remove this code and fix the event of selected barber
+            const option = document.createElement("option");
+            option.value = "";
+            selectedBarbershop.appendChild(option);
+            barbersData.forEach((data) => {
+                const option = document.createElement("option");
+                option.text = data.name;
+                option.value = data.id;
+                selectedBarbershop.appendChild(option);
+            });
+        } else {
+            console.error('Data is empty or not an array:', barbersData);
+            showError('Data is empty or not an array.');
         }
+    } catch (error) {
+        console.error('There was a problem with your fetch operation:', error);
+        showError('There was a problem with your fetch operation.');
+    }
+}
+
+const handleSelectedCheckboxesChange = (selectedHaircutTypes) => {
+    const selectedCheckboxes = [];
+    selectedHaircutTypes.forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                selectedCheckboxes.push(event.target.value.toString());
+            } else {
+                const index = selectedCheckboxes.indexOf(event.target.value);
+                if (index !== -1) {
+                    selectedCheckboxes.splice(index, 1);
+                }
+            }
+            appointmentData.haircutType = selectedCheckboxes;
+        });
     });
-    */
-});
 
-
-
-let scrollPosition = 0;
-
-function openModal() {
-    const modal = document.getElementById("successModal");
-    modal.style.display = "block";
-    disableScroll(); // מנע גלילה
 }
 
-function closeModal() {
-    const modal = document.getElementById("successModal");
-    modal.style.display = "none";
-    enableScroll(); // שחרור המניעה
+const handleSelectionBarbershopsChange = (selectedBarbershop) => {
+    appointmentData.barbershopId = parseInt(selectedBarbershop);
 }
 
-function disableScroll() {
-    scrollPosition = document.documentElement.scrollTop;
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+const handleSelectionBarbersChange = (selectedBarber) => {
+    appointmentData.barberId = parseInt(selectedBarber);
+    console.log(selectedBarber);
 }
 
-function enableScroll() {
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-    window.scrollTo(0, scrollPosition);
+const showError = (errorMessage = "") => {
+    const errorMessageElement = document.getElementById('error-message');
+    console.log(errorMessage);
+    if (isNullOrUndefined(errorMessage) || errorMessage === "") {
+        console.log("true");
+        validations = true;
+    } else {
+        console.log("false");
+
+        validations = false;
+    }
+    errorMessageElement.textContent = errorMessage;
 }
 
-var hours = [
-    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-    "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
-    "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"
-];
-
-
-/* document.addEventListener('DOMContentLoaded', function () {
-
- const dateInput = document.getElementById('appointmentDate');
-   const appointmentTimeSelect = document.getElementById('appointmentTime');
-   const form = document.getElementById('appointmentForm');
-   const errorMessage = document.getElementById('errorMessage');
-
-   // Call showAvailableTimes immediately to check if a date is selected
-   // showAvailableTimes(dateInput.value, appointmentTimeSelect);
-
-   // Add event listener for date change
-   dateInput.addEventListener('change', function () {
-       showAvailableTimes(dateInput.value, appointmentTimeSelect);
-   });
-
-   form.addEventListener('submit', function (event) {
-       event.preventDefault(); // Prevent default form submission behavior
-
-       const selectedDate = dateInput.value;
-       const selectedTime = appointmentTimeSelect.value;
-       const selectedHaircut = document.getElementById('haircutType').value;
-       const name = document.getElementById('name').value;
-       const email = document.getElementById('email').value;
-       const phone = document.getElementById('phone').value;
-
-       // Validate inputs
-       if (!selectedDate || !selectedTime || !selectedHaircut || !name || !email || !phone) {
-           errorMessage.textContent = 'Please fill out all fields.';
-           return;
-       }
-
-       const appointmentDateTimeStart = new Date(selectedDate + 'T' + selectedTime);
-       const appointmentDateTimeEnd = new Date(selectedDate + 'T' + addHalfHourToTime(selectedTime));
-
-       // Create an object with the appointment details
-       const appointmentData = {
-           timeStart: appointmentDateTimeStart,
-           timeEnd: appointmentDateTimeEnd,
-           haircutType: parseInt(selectedHaircut),
-           name: name,
-           email: email,
-           phone: phone
-       };
-       // If all inputs are valid, you can proceed with submitting the form or handling the appointment data.
-       // For demonstration purposes, I'm just logging the appointment data.
-       console.log('Appointment Details:');
-       console.log('Date:', appointmentDateTimeStart);
-       console.log('Date:', appointmentDateTimeEnd);
-       console.log('Haircut Type:', selectedHaircut);
-       console.log('Name:', name);
-       console.log('Email:', email);
-       console.log('Phone:', phone);
-
-       // Clear any previous error message
-       errorMessage.textContent = '';
-
-       fetch('http://localhost:3001/addAppointment', {
-           method: 'POST',
-           headers: {
-               'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(appointmentData),
-       })
-           .then(response => response.json())
-           .then(data => {
-               console.log('New customer and appointment:', data);
-           })
-           .catch(error => {
-               console.error('Error:', error);
-           });
-   });
-});
-
-function addHalfHourToTime(time) {
-   const [hours, minutes] = time.split(':').map(Number);
-   let newHours = hours;
-   let newMinutes = minutes + 30;
-   if (newMinutes >= 60) {
-       newHours++;
-       newMinutes -= 60;
-   }
-   return `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}`;
+const addHalfHourToTime = (time) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    let newHours = hours;
+    let newMinutes = minutes + 30;
+    if (newMinutes >= 60) {
+        newHours++;
+        newMinutes -= 60;
+    }
+    return `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}`;
 }
-
-async function showAvailableTimes(selectedDate, timeSelect) {
-   console.log(selectedDate);
-   console.log(timeSelect);
-   let availableTimes;
-   const errorMessage = document.getElementById('errorMessage');
-
-   if (!selectedDate) {
-       errorMessage.textContent = 'Please select a date to show available times';
-       timeSelect.innerHTML = '';
-       return;
-   }
-   const selectedDateTime = new Date(selectedDate);
-   if (selectedDateTime.getDay() === 5 || selectedDateTime.getDay() === 6) {
-       errorMessage.textContent = 'Please select a date other than Friday or Saturday.';
-       return;
-   }
-   // Validate date
-   const today = new Date();
-   const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-   if (selectedDateTime < todayWithoutTime) {
-       errorMessage.textContent = 'Please select a date in the future.';
-       timeSelect.innerHTML = '';
-       return;
-   }
-
-   try {
-       const response = await fetch(`http://localhost:3001/availableSlots/${selectedDate}`);
-       if (!response.ok) {
-           throw new Error('Network response was not ok');
-       }
-       availableTimes = await response.json();
-       console.log(availableTimes);
-   } catch (error) {
-       console.error('There was a problem with your fetch operation:', error);
-   }
-
-   timeSelect.innerHTML = '';
-
-   if (availableTimes && Array.isArray(availableTimes)) {
-       availableTimes.forEach(time => {
-           const option = document.createElement('option');
-           option.text = time;
-           timeSelect.add(option);
-       });
-   } else {
-       console.error('Data is empty or not an array:', availableTimes);
-   }
-
-   // Clear any previous error message
-   errorMessage.textContent = '';
-}
-*/
