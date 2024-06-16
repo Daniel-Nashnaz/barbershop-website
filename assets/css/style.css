@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
-
 .white-bg {
     background: #ffffff
 }
@@ -574,7 +573,6 @@ hr {
 }
 
 @media (max-width: 575px) {
-
     #scrollUp,
     #back-top {
         right: 16px
@@ -1913,12 +1911,10 @@ hr {
         -webkit-transform: translateY(-20px);
         transform: translateY(-20px)
     }
-
     50% {
         -webkit-transform: translateY(-10px);
         transform: translateY(-10px)
     }
-
     100% {
         -webkit-transform: translateY(-20px);
         transform: translateY(-20px)
@@ -1952,7 +1948,6 @@ hr {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg)
     }
-
     to {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg)
@@ -1963,7 +1958,6 @@ hr {
     from {
         -webkit-transform: rotate(0deg)
     }
-
     to {
         -webkit-transform: rotate(360deg)
     }
@@ -2047,7 +2041,6 @@ hr {
         -o-transition: .6s;
         transition: .6s
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -2065,7 +2058,6 @@ hr {
         -o-transition: .6s;
         transition: .6s
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -2926,12 +2918,10 @@ hr {
 }
 
 @keyframes animate {
-
     0%,
     100% {
         clip-path: polygon(0% 45%, 15% 44%, 32% 50%, 54% 60%, 70% 61%, 84% 69%, 100% 52%, 100% 100%, 0% 100%)
     }
-
     50% {
         clip-path: polygon(0% 60%, 16% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%)
     }
@@ -3439,67 +3429,100 @@ hr {
     text-align: right;
 }
 
-.info-text {
+.error-message {
+    color: red;
     display: inline-block;
-    margin-left: 10%;
+    white-space: pre-line;
+    margin-left: 35%;
+    margin-top: 0%;
 }
 
-/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
-    background-color: #cdc891;
-    margin: 10% auto;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #f47a7a;
-    width: 50%;
-    /* 50% width of the viewport */
-    max-width: 500px;
-    /* Maximum width of 500px */
-}
-
-/* Close Button */
-.close {
-    color: #553d3d;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Style for modal buttons */
-.modal-buttons {
+    border-radius: 30px;
     text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-.modal-buttons button {
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.svg-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
 }
 
-.modal-buttons button:hover {
-    background-color: #0056b3;
+.modal-body h4 {
+    margin-top: 20px;
+}
+
+.modal-body p {
+    margin-top: 10px;
+}
+
+
+/* Animation */
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.path.circle {
+    animation: dash 0.9s ease-in-out;
+}
+
+.path.line {
+    stroke-dashoffset: 1000;
+    animation: dash-line 0.95s 0.35s ease-in-out forwards;
+}
+
+.path.check {
+    stroke-dashoffset: -100;
+    animation: dash-check 0.95s 0.35s ease-in-out forwards;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash-line {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+    100% {
+        stroke-dashoffset: 900;
+    }
 }
 
 .cut-details .single-cut {
@@ -4354,7 +4377,6 @@ hr {
     .single-blog .tag {
         margin-right: 8px
     }
-
     .single-blog .tag:after {
         display: none
     }
@@ -4406,7 +4428,6 @@ hr {
         padding-bottom: 14px;
         margin-bottom: 12px
     }
-
     .single-blog h4 a {
         font-size: 18px
     }
@@ -5329,11 +5350,9 @@ hr {
     .comments-area .comment-list .single-comment h5 {
         font-size: 12px
     }
-
     .comments-area .comment-list .single-comment .date {
         font-size: 11px
     }
-
     .comments-area .comment-list .single-comment .comment {
         font-size: 10px
     }
@@ -5504,11 +5523,8 @@ hr {
     width: 100%;
 }
 
-
-
 .form-contact label {
     font-size: 15px;
-
 }
 
 .form-contact .form-group {
