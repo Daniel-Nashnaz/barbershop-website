@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Great+Vibes|Josefin+Sans:300,400,600,700,700i|Montserrat:200,300,400,500,600,700,800&display=swap");
-
 .white-bg {
     background: #ffffff
 }
@@ -1886,12 +1885,10 @@ hr {
         -webkit-transform: translateY(-20px);
         transform: translateY(-20px)
     }
-
     50% {
         -webkit-transform: translateY(-10px);
         transform: translateY(-10px)
     }
-
     100% {
         -webkit-transform: translateY(-20px);
         transform: translateY(-20px)
@@ -1925,7 +1922,6 @@ hr {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg)
     }
-
     to {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg)
@@ -1936,7 +1932,6 @@ hr {
     from {
         -webkit-transform: rotate(0deg)
     }
-
     to {
         -webkit-transform: rotate(360deg)
     }
@@ -2020,7 +2015,6 @@ hr {
         -o-transition: .6s;
         transition: .6s
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -2038,7 +2032,6 @@ hr {
         -o-transition: .6s;
         transition: .6s
     }
-
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -2849,12 +2842,10 @@ hr {
 }
 
 @keyframes slide1 {
-
     0%,
     100% {
         transform: translate(0, 0)
     }
-
     50% {
         transform: translate(5px, 0);
         -webkit-transform: translate(5px, 0);
@@ -3156,12 +3147,10 @@ hr {
 }
 
 @keyframes slide1 {
-
     0%,
     100% {
         transform: translate(0, 0)
     }
-
     50% {
         transform: translate(5px, 0);
         -webkit-transform: translate(5px, 0);
@@ -3568,12 +3557,10 @@ hr {
 }
 
 @keyframes slide1 {
-
     0%,
     100% {
         transform: translate(0, 0)
     }
-
     50% {
         transform: translate(5px, 0);
         -webkit-transform: translate(5px, 0);
@@ -4086,7 +4073,6 @@ hr {
     .single-blog .tag {
         margin-right: 8px
     }
-
     .single-blog .tag:after {
         display: none
     }
@@ -4139,7 +4125,6 @@ hr {
         padding-bottom: 14px;
         margin-bottom: 12px
     }
-
     .single-blog h4 a {
         font-size: 18px
     }
@@ -5070,11 +5055,9 @@ hr {
     .comments-area .comment-list .single-comment h5 {
         font-size: 12px
     }
-
     .comments-area .comment-list .single-comment .date {
         font-size: 11px
     }
-
     .comments-area .comment-list .single-comment .comment {
         font-size: 10px
     }
@@ -5607,14 +5590,14 @@ hr {
     background: -moz-linear-gradient(top, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
     background: -webkit-linear-gradient(top, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
     background: linear-gradient(to bottom, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00021a47', endColorstr='#99021a47', GradientType=0)
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#00021a47', endColorstr='#99021a47', GradientType=0)
 }
 
 .gallery-area .gallery-box .single-gallery::before {
     background: -moz-linear-gradient(top, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
     background: -webkit-linear-gradient(top, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
     background: linear-gradient(to bottom, rgba(2, 26, 71, 0) 0%, rgba(2, 26, 71, 0.6) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00021a47', endColorstr='#99021a47', GradientType=0)
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#00021a47', endColorstr='#99021a47', GradientType=0)
 }
 
 .sample-text-area {
