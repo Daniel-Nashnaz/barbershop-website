@@ -1,4 +1,4 @@
-import { CLOSED_DAY_1, CLOSED_DAY_2, DAYS } from "./constants.js";
+import { CLOSED_DAY_1, CLOSED_DAY_2, DAYS, UserRole } from "./constants.js";
 
 export function validateName(name) {
     const nameRegex = /^[\u0590-\u05FFa-zA-Z\s]{2,}$/;
@@ -43,3 +43,38 @@ export function isNullOrUndefined(value) {
 export function isNullOrUndefinedOrNan(value) {
     return value === null || value === undefined || isNaN(value);
 }
+
+export const isLoggedIn = () => {
+    return localStorage.getItem('userData') !== null;
+};
+export const logout = () => {
+    localStorage.removeItem('userData');
+};
+
+export const checkAdminAccess = () => {
+    const currentUser = JSON.parse(localStorage.getItem('userData'));
+    if (isNullOrUndefined(currentUser))
+        return false;
+
+    return currentUser.includes(UserRole.Admin) || currentUser.includes(UserRole.Barber);
+
+};
+
+
+export const navigateBasedOnRole = () => {
+    const currentUser = JSON.parse(localStorage.getItem('userData'));
+    console.log(currentUser);
+    if (currentUser.roles.includes(UserRole.Admin)) {
+        console.log("Navigate to Admin dashboard");
+        window.location.href = 'barberInfo.html';
+        //create admin page...
+    } else if (currentUser.roles.includes(UserRole.Barber)) {
+        console.log("Navigate to Barber dashboard");
+        window.location.href = 'barberInfo.html';
+    } else if (currentUser.roles.includes(UserRole.Customer)) {
+        console.log("Navigate to Customer dashboard");
+        window.location.href = 'index.html';
+    } else {
+        console.log("Navigate to default page");
+    }
+};

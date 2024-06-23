@@ -1,4 +1,4 @@
-import { IP, PORT } from './constants.js';
+import { IP, PORT, SERVER_URL } from './constants.js';
 import { AppointmentData } from './models.js';
 import { validateName, validateEmail, validatePhone, validateSelectedDate, isNullOrUndefined, isNullOrUndefinedOrNan } from './validation.js';
 let validations = false;
@@ -74,41 +74,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    form.addEventListener("reset", (event) => {
+    form.addEventListener('submit', async(event) => {
         event.preventDefault();
-        selectedBarbershops.innerHTML = '';
-        selectedBarbers.innerHTML = '';
-        selectedTime.innerHTML = '';
-        dateInput.value = '';
-        form.reset();
-    });
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        console.log(appointmentData);
         validateForm();
+
         if (validations) {
-            fetch(`http://${IP}:${PORT}/addAppointment`, {
+            try {
+                const response = await fetch(`${SERVER_URL}/addAppointment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(appointmentData),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('New customer and appointment:', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
                 });
 
-            //== If the form is valid, display success modal
-            openModal()
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                openModal();
+                const data = await response.json();
+                console.log('New customer and appointment:', data);
 
+                resetSelected();
+                form.reset();
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
     });
+
+    const resetSelected = () => {
+        selectedBarbers.innerHTML = '';
+        selectedTime.innerHTML = '';
+        dateInput.value = '';
+    }
 
     const validateForm = () => {
         showError();
@@ -200,7 +200,7 @@ const showAvailableTimes = async(selectedDate, timeSelect, errorHandler) => {
         return;
     }
     try {
-        const response = await fetch(`http://${IP}:${PORT}/availableSlots?date=${selectedDate.value}&barberId=${appointmentData.barberId}&barbershopId=${appointmentData.barbershopId}`);
+        const response = await fetch(`${SERVER_URL}/availableSlots?date=${selectedDate.value}&barberId=${appointmentData.barberId}&barbershopId=${appointmentData.barbershopId}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -233,7 +233,7 @@ const showAvailableTimes = async(selectedDate, timeSelect, errorHandler) => {
 const populateBarbershops = async(selectedBarbershop) => {
     let barbershopsData;
     try {
-        const response = await fetch(`http://${IP}:${PORT}/barbershop/barbershops`);
+        const response = await fetch(`${SERVER_URL}/barbershop/barbershops`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -258,7 +258,7 @@ const populateBarbershops = async(selectedBarbershop) => {
 const populateBarbers = async(selectedBarbershop) => {
     let barbersData;
     try {
-        const response = await fetch(`http://${IP}:${PORT}/barber/getBarbersOfBarbershopId/${appointmentData.barbershopId}`);
+        const response = await fetch(`${SERVER_URL}/barber/getBarbersOfBarbershopId/${appointmentData.barbershopId}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
