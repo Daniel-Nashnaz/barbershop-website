@@ -1,8 +1,13 @@
-import { IP, PORT } from "./constants.js";
-import { validateEmail } from "./validation.js";
+import { SERVER_URL, UserRole } from "./constants.js";
+import { isLoggedIn, navigateBasedOnRole, validateEmail } from "./validation.js";
 let myTimeout;
 
 document.addEventListener("DOMContentLoaded", () => {
+    if (isLoggedIn()) {
+        console.log("asasas");
+        navigateBasedOnRole();
+        return;
+    }
     const errorMessage = document.getElementById('error');
     const selectedEmail = document.getElementById('email');
 
@@ -28,19 +33,18 @@ document.addEventListener("DOMContentLoaded", () => {
             myTimeout = setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('loginContainer').style.display = 'block';
-            }, 5000);
+            }, 3000);
 
-            const response = await fetch(`http://${IP}:${PORT}/getUseroleData/${email}`);
+            const response = await fetch(`${SERVER_URL}/getUserRoleData/${email}`);
             const userData = await response.json();
             localStorage.setItem('userData', JSON.stringify(userData));
-            console.log(userData);
-
-            window.location.href = 'userInfo.html';
-
+            navigateBasedOnRole();
         } catch (error) {
             console.error('Error fetching user data:', error);
             errorMessage.innerHTML = 'Error fetching user data try again';
         }
+
+
 
     });
 });
