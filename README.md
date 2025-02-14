@@ -4,7 +4,7 @@
 Welcome to the official repository for the **Davidov and Barboris Barbershop** website! This project is a modern, customer-facing platform designed to showcase barbershop services and enable seamless appointment booking. It integrates with the **BarBoris Backend** for real-time data handling.
 
 ## 🌐 Live Demo  
-Explore the live website here: [https://daniel-nassi.github.io/barbershop-website/](https://daniel-nassi.github.io/barbershop-website/)
+Explore the live website here: [barbershop-website](https://daniel-nassi.github.io/barbershop-website/)
 
 ---
 
@@ -71,7 +71,7 @@ vercel deploy
 
 ## 🔗 Related Repositories  
 This frontend is powered by the **BarBoris Backend**:  
-🔗 [BarBoris Backend](https://github.com/your-repo-link)
+🔗 [BarBoris Backend](https://github.com/Daniel-Nashnaz/barboris)
 
 ---
 
