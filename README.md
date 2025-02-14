@@ -1,28 +1,77 @@
-# Barbershop Website for Davidov and Barboris
+# Barbershop Website - Frontend  
+**Next.js + Tailwind CSS + API Integration**
 
-Welcome to the official repository for the Davidov and Barboris Barbershop website! This project showcases the services offered by our barbershop and provides an easy-to-navigate platform for clients to learn more about us.
+Welcome to the official repository for the **Davidov and Barboris Barbershop** website! This project is a modern, customer-facing platform designed to showcase barbershop services and enable seamless appointment booking. It integrates with the **BarBoris Backend** for real-time data handling.
 
-## Live Demo
+## 🌐 Live Demo  
+Explore the live website here: [https://daniel-nassi.github.io/barbershop-website/](https://daniel-nassi.github.io/barbershop-website/)
 
-You can view the live website at: [https://daniel-nassi.github.io/barbershop-website/](https://daniel-nassi.github.io/barbershop-website/)
+---
 
-## Features
+## 🎯 Key Features  
+- **Modern, Responsive Design**: Optimized for both mobile and desktop.  
+- **Service Showcase**: Displays barbershop services and pricing.  
+- **Online Booking**: Allows customers to schedule appointments effortlessly.  
+- **Live API Integration**: Fetches real-time data from the backend.  
+- **Fast & SEO-Optimized**: Built for performance and search engine visibility.  
 
-- **Responsive Design**: The website is optimized for both mobile and desktop devices.
-- **Services Overview**: Detailed descriptions of the services we offer.
-- **Contact Information**: Easy access to our contact details and location.
-- **Social Media Links**: Connect with us on various social platforms.
+---
 
-## Technologies Used
+## 🛠️ Technologies Used  
 
-- HTML5
-- CSS3 (with Flexbox/Grid for layout)
-- JavaScript (for interactivity)
+| Technology       | Purpose                          |
+|------------------|----------------------------------|
+| **Next.js 14**   | React Framework                  |
+| **Tailwind CSS** | Styling                         |
+| **TypeScript**   | Type Safety                     |
+| **Shadcn/UI**    | Pre-built UI Components         |
+| **Axios / Fetch**| API Communication               |
 
-## Installation
+---
 
-To run this project locally, follow these steps:
+## 🚀 Installation & Setup  
 
-1. Clone the repository:
+1️⃣ **Clone the repository:**  
    ```bash
    git clone https://github.com/Daniel-Nashnaz/barbershop-website.git
+   cd barbershop-website
+   ```
+
+2️⃣ **Install dependencies:**  
+   ```bash
+   npm install
+   ```
+
+3️⃣ **Set up environment variables:**  
+   - Create a `.env.local` file.  
+   - Add the following:  
+     ```env
+     NEXT_PUBLIC_API_URL=http://localhost:3001
+     ```
+
+4️⃣ **Run the development server:**  
+   ```bash
+   npm run dev
+   ```
+
+5️⃣ **Access the site:**  
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🌍 Deployment  
+Deploy the project to **Vercel**, **Netlify**, or a custom server.  
+
+**Example using Vercel:**  
+```bash
+vercel deploy
+```
+
+---
+
+## 🔗 Related Repositories  
+This frontend is powered by the **BarBoris Backend**:  
+🔗 [BarBoris Backend](https://github.com/your-repo-link)
+
+---
+
